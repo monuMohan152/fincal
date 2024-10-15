@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Calculators: Easy-to-Use Tools for Personal and Business Finance</title>
+  <meta name="description" content="Access a variety of free, user-friendly finance calculators for personal and business use. Calculate loans, investments, mortgages, and more with our accurate tools.">
+  <meta name="keywords" content="finance calculators, loan calculator, investment calculator, mortgage calculator, personal finance, business finance">
+  <meta name="author" content="Your Company Name">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.yourwebsite.com/finance-calculators">
+  <meta property="og:title" content="Finance Calculators: Easy-to-Use Tools for Personal and Business Finance">
+  <meta property="og:description" content="Access a variety of free, user-friendly finance calculators for personal and business use. Calculate loans, investments, mortgages, and more with our accurate tools.">
+  <meta property="og:image" content="https://www.yourwebsite.com/path-to-your-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://www.yourwebsite.com/finance-calculators">
+  <meta property="twitter:title" content="Finance Calculators: Easy-to-Use Tools for Personal and Business Finance">
+  <meta property="twitter:description" content="Access a variety of free, user-friendly finance calculators for personal and business use. Calculate loans, investments, mortgages, and more with our accurate tools.">
+  <meta property="twitter:image" content="https://www.yourwebsite.com/path-to-your-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.yourwebsite.com/finance-calculators">
+
+  <!-- External Resources -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                100: '#1E1E1E',
+                200: '#2D2D2D',
+                300: '#3D3D3D',
+              },
+              light: {
+                100: '#FFFFFF',
+                200: '#F3F4F6',
+                300: '#E5E7EB',
+              },
+              primary: {
+                light: '#3B82F6',
+                dark: '#60A5FA',
+              },
+              secondary: {
+                light: '#10B981',
+                dark: '#34D399',
+              },
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+   {
+     "@context": "https://schema.org",
+     "@type": "WebApplication",
+     "name": "Finance Calculators",
+     "description": "Access a variety of free, user-friendly finance calculators for personal and business use. Calculate loans, investments, mortgages, and more with our accurate tools.",
+     "url": "https://www.yourwebsite.com/finance-calculators",
+     "applicationCategory": "FinanceApplication",
+     "operatingSystem": "All",
+     "offers": {
+       "@type": "Offer",
+       "price": "0"
+     }
+   }
+   </script>
+    <style>
+      [v-cloak] { display: none; }
+      .calculator-card {
+        aspect-ratio: 16 / 9;
+        background-size: cover;
+        background-position: center;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        @apply bg-light-200 dark:bg-dark-200;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-gray-400 dark:bg-gray-600;
+        border-radius: 20px;
+      }
+      .theme-transition {
+        transition: background-color 0.3s, color 0.3s;
+      }
+    </style>
+</head>
+<body class="theme-transition bg-light-100 dark:bg-dark-100 text-gray-900 dark:text-gray-100 font-sans min-h-screen">
+  <div id="app" v-cloak class="container mx-auto px-4 py-8">
+    <!-- Navigation -->
+    <nav class="mb-8">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-primary-light dark:text-primary-dark">MarketPlace App</h1>
+        <button @click="toggleTheme" class="bg-light-200 dark:bg-dark-200 p-2 rounded-full">
+          <svg v-if="isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div v-if="currentPage === 'home'">
+      <h2 class="text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">Financial Calculators</h2>
+      <p class="text-lg mb-8 text-gray-600 dark:text-gray-400">Empower your financial decisions with our suite of calculators</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-for="calc in calculators" :key="calc.name"
+             class="calculator-card relative overflow-hidden rounded-lg shadow-lg cursor-pointer transform transition duration-300 hover:scale-105"
+             :style="{ backgroundImage: `url(${calc.bgImage})` }"
+             @click="openCalculator(calc)">
+          <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <p class="text-sm font-semibold text-primary-light dark:text-primary-dark">{{ calc.category }}</p>
+            <h3 class="text-xl font-bold">{{ calc.name }}</h3>
+          </div>
+          <div class="absolute top-4 right-4 bg-primary-light dark:bg-primary-dark bg-opacity-90 text-white px-3 py-1 rounded-full text-sm font-semibold">
+            Try now
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calculator Pages -->
+    <div v-else class="bg-light-200 dark:bg-dark-200 rounded-lg shadow-xl p-6">
+      <button @click="currentPage = 'home'" class="mb-6 bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition duration-300 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Back to Home
+      </button>
+      <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">{{ currentCalculator.name }}</h2>
+      <div class="bg-light-300 dark:bg-dark-300 rounded-lg p-6">
+        <component :is="currentCalculator.component" @calculate="handleCalculation"></component>
+      </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div v-if="showResult" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-light-200 dark:bg-dark-200 p-8 rounded-lg max-w-md w-full">
+        <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Calculation Result</h3>
+        <div class="mb-6">
+          <canvas ref="resultChart"></canvas>
+        </div>
+        <p class="mb-6 text-gray-700 dark:text-gray-300 whitespace-pre-line">{{ calculationResult }}</p>
+        <button @click="showResult = false" class="bg-primary-light dark:bg-primary-dark text-white px-6 py-3 rounded-full hover:bg-opacity-90 transition duration-300 w-full">Close</button>
+      </div>
+    </div>
+  </div>
+
+    <script>
+        const { createApp, ref, onMounted, nextTick } = Vue
+
+        const toggleTheme = () => {
+              isDarkMode.value = !isDarkMode.value
+              document.documentElement.classList.toggle('dark')
+              // You may want to save the user's preference in localStorage here
+            }
+
+            onMounted(() => {
+              // Check for user's saved preference or system preference
+              const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+              isDarkMode.value = localStorage.getItem('darkMode') === 'true' || darkModeMediaQuery.matches
+              document.documentElement.classList.toggle('dark', isDarkMode.value)
+
+              // Listen for changes in system preference
+              darkModeMediaQuery.addEventListener('change', (e) => {
+                isDarkMode.value = e.matches
+                document.documentElement.classList.toggle('dark', isDarkMode.value)
+                // You may want to save the new preference to localStorage here
+              })
+            })
+        // Calculator Components
+        const CalculatorMixin = {
+            data() {
+                return {
+                    formData: {},
+                }
+            },
+            methods: {
+                updateField(field, value) {
+                    this.formData[field] = value;
+                },
+            },
+            template: `
+                <div class="space-y-4">
+                    <div v-for="field in fields" :key="field.name" class="mb-4">
+                        <label :for="field.name" class="block mb-2 text-sm font-medium text-gray-300">{{ field.label }}</label>
+                        <input
+                            :id="field.name"
+                            :type="field.type"
+                            :step="field.step"
+                            v-model="formData[field.name]"
+                            @input="updateField(field.name, $event.target.value)"
+                            class="w-full p-3 bg-dark-100 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                            :placeholder="field.placeholder"
+                        >
+                    </div>
+                    <button @click="calculate" class="w-full bg-primary text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300">Calculate</button>
+                </div>
+            `
+        }
+
+        const CompoundInterestCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'principal', label: 'Principal Amount', type: 'number', step: '0.01', placeholder: 'Enter principal amount' },
+                        { name: 'rate', label: 'Annual Interest Rate (%)', type: 'number', step: '0.1', placeholder: 'Enter annual interest rate' },
+                        { name: 'time', label: 'Time Period (years)', type: 'number', step: '1', placeholder: 'Enter time period in years' },
+                        { name: 'frequency', label: 'Compound Frequency', type: 'number', step: '1', placeholder: 'Enter compound frequency per year' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const P = parseFloat(this.formData.principal);
+                    const r = parseFloat(this.formData.rate) / 100;
+                    const t = parseFloat(this.formData.time);
+                    const n = parseFloat(this.formData.frequency);
+
+                    const A = P * Math.pow(1 + (r / n), n * t);
+                    const interest = A - P;
+
+                    this.$emit('calculate', {
+                        result: `Final Amount: ₹${A.toFixed(2)}\nTotal Interest: ₹${interest.toFixed(2)}`,
+                        chartData: {
+                            labels: ['Principal', 'Interest'],
+                            datasets: [{
+                                data: [P, interest],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const RDCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'deposit', label: 'Monthly Deposit', type: 'number', step: '0.01', placeholder: 'Enter monthly deposit amount' },
+                        { name: 'rate', label: 'Annual Interest Rate (%)', type: 'number', step: '0.1', placeholder: 'Enter annual interest rate' },
+                        { name: 'time', label: 'Time Period (months)', type: 'number', step: '1', placeholder: 'Enter time period in months' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const P = parseFloat(this.formData.deposit);
+                    const r = parseFloat(this.formData.rate) / 100 / 12;
+                    const n = parseFloat(this.formData.time);
+
+                    const A = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+                    const totalDeposit = P * n;
+                    const interest = A - totalDeposit;
+
+                    this.$emit('calculate', {
+                        result: `Maturity Amount: ₹${A.toFixed(2)}\nTotal Deposit: ₹${totalDeposit.toFixed(2)}\nInterest Earned: ₹${interest.toFixed(2)}`,
+                        chartData: {
+                            labels: ['Total Deposit', 'Interest'],
+                            datasets: [{
+                                data: [totalDeposit, interest],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const FDCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'principal', label: 'Principal Amount', type: 'number', step: '0.01', placeholder: 'Enter principal amount' },
+                        { name: 'rate', label: 'Annual Interest Rate (%)', type: 'number', step: '0.1', placeholder: 'Enter annual interest rate' },
+                        { name: 'time', label: 'Time Period (years)', type: 'number', step: '0.25', placeholder: 'Enter time period in years' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const P = parseFloat(this.formData.principal);
+                    const r = parseFloat(this.formData.rate) / 100;
+                    const t = parseFloat(this.formData.time);
+
+                    const A = P * Math.pow(1 + r, t);
+                    const interest = A - P;
+
+                    this.$emit('calculate', {
+                        result: `Maturity Amount: ₹${A.toFixed(2)}\nTotal Interest: ₹${interest.toFixed(2)}`,
+                        chartData: {
+                            labels: ['Principal', 'Interest'],
+                            datasets: [{
+                                data: [P, interest],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const PostOfficeCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'scheme', label: 'Scheme', type: 'select', options: ['Savings Account', 'Time Deposit', 'Recurring Deposit'] },
+                        { name: 'amount', label: 'Amount', type: 'number', step: '0.01', placeholder: 'Enter amount' },
+                        { name: 'time', label: 'Time Period (years)', type: 'number', step: '0.25', placeholder: 'Enter time period in years' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const amount = parseFloat(this.formData.amount);
+                    const time = parseFloat(this.formData.time);
+                    let result, interest;
+
+                    switch(this.formData.scheme) {
+                        case 'Savings Account':
+                            interest = amount * 0.04 * time;
+                            result = `Interest Earned: ₹${interest.toFixed(2)}`;
+                            break;
+                        case 'Time Deposit':
+                            const tdRate = 0.065; // 6.5% for Time Deposit
+                            const tdMaturity = amount * Math.pow(1 + tdRate, time);
+                            interest = tdMaturity - amount;
+                            result = `Maturity Amount: ₹${tdMaturity.toFixed(2)}\nInterest Earned: ₹${interest.toFixed(2)}`;
+                            break;
+                        case 'Recurring Deposit':
+                            const rdRate = 0.055 / 12; // 5.5% per annum for RD
+                            const months = time * 12;
+                            const rdMaturity = amount * ((Math.pow(1 + rdRate, months) - 1) / rdRate) * (1 + rdRate);
+                            interest = rdMaturity - (amount * months);
+                            result = `Maturity Amount: ₹${rdMaturity.toFixed(2)}\nInterest Earned: ₹${interest.toFixed(2)}`;
+                            break;
+                    }
+
+                    this.$emit('calculate', {
+                        result: result,
+                        chartData: {
+                            labels: ['Principal', 'Interest'],
+                            datasets: [{
+                                data: [amount, interest],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const PFPPFCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'monthlyContribution', label: 'Monthly Contribution', type: 'number', step: '0.01', placeholder: 'Enter monthly contribution' },
+                        { name: 'rate', label: 'Annual Interest Rate (%)', type: 'number', step: '0.1', placeholder: 'Enter annual interest rate' },
+                        { name: 'time', label: 'Time Period (years)', type: 'number', step: '1', placeholder: 'Enter time period in years' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const P = parseFloat(this.formData.monthlyContribution);
+                    const r = parseFloat(this.formData.rate) / 100 / 12;
+                    const n = parseFloat(this.formData.time) * 12;
+
+                    const A = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+                    const totalContribution = P * n;
+                    const interest = A - totalContribution;
+
+                    this.$emit('calculate', {
+                        result: `Maturity Amount: ₹${A.toFixed(2)}\nTotal Contribution: ₹${totalContribution.toFixed(2)}\nInterest Earned: ₹${interest.toFixed(2)}`,
+                        chartData: {
+                            labels: ['Total Contribution', 'Interest'],
+                            datasets: [{
+                                data: [totalContribution, interest],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const SavingsAccountCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'principal', label: 'Initial Deposit', type: 'number', step: '0.01', placeholder: 'Enter initial deposit' },
+                        { name: 'monthlyDeposit', label: 'Monthly Deposit', type: 'number', step: '0.01', placeholder: 'Enter monthly deposit' },
+                        { name: 'rate', label: 'Annual Interest Rate (%)', type: 'number', step: '0.1', placeholder: 'Enter annual interest rate' },
+                        { name: 'time', label: 'Time Period (years)', type: 'number', step: '1', placeholder: 'Enter time period in years' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const P = parseFloat(this.formData.principal);
+                    const M = parseFloat(this.formData.monthlyDeposit);
+                    const r = parseFloat(this.formData.rate) / 100 / 12;
+                    const n = parseFloat(this.formData.time) * 12;
+
+                    const A = P * Math.pow(1 + r, n) + M * ((Math.pow(1 + r, n) - 1) / r);
+                    const totalDeposit = P + (M * n);
+                    const interest = A - totalDeposit;
+
+                    this.$emit('calculate', {
+                        result: `Final Balance: ₹${A.toFixed(2)}\nTotal Deposits: ₹${totalDeposit.toFixed(2)}\nInterest Earned: ₹${interest.toFixed(2)}`,
+                        chartData: {
+                            labels: ['Total Deposits', 'Interest'],
+                            datasets: [{
+                                data: [totalDeposit, interest],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const MutualFundCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'initialInvestment', label: 'Initial Investment', type: 'number', step: '0.01', placeholder: 'Enter initial investment' },
+                        { name: 'monthlyInvestment', label: 'Monthly Investment', type: 'number', step: '0.01', placeholder: 'Enter monthly investment' },
+                        { name: 'expectedReturn', label: 'Expected Annual Return (%)', type: 'number', step: '0.1', placeholder: 'Enter expected annual return' },
+                        { name: 'time', label: 'Time Period (years)', type: 'number', step: '1', placeholder: 'Enter time period in years' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const P = parseFloat(this.formData.initialInvestment);
+                    const M = parseFloat(this.formData.monthlyInvestment);
+                    const r = parseFloat(this.formData.expectedReturn) / 100 / 12;
+                    const n = parseFloat(this.formData.time) * 12;
+
+                    const A = P * Math.pow(1 + r, n) + M * ((Math.pow(1 + r, n) - 1) / r);
+                    const totalInvestment = P + (M * n);
+                    const gain = A - totalInvestment;
+
+                    this.$emit('calculate', {
+                        result: `Final Amount: ₹{A.toFixed(2)}\nTotal Investment: ₹${totalInvestment.toFixed(2)}\nTotal Gain: ₹${gain.toFixed(2)}`,
+                        chartData: {
+                            labels: ['Total Investment', 'Gain'],
+                            datasets: [{
+                                data: [totalInvestment, gain],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const SIPCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'monthlyInvestment', label: 'Monthly Investment', type: 'number', step: '0.01', placeholder: 'Enter monthly investment' },
+                        { name: 'expectedReturn', label: 'Expected Annual Return (%)', type: 'number', step: '0.1', placeholder: 'Enter expected annual return' },
+                        { name: 'time', label: 'Time Period (years)', type: 'number', step: '1', placeholder: 'Enter time period in years' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const P = parseFloat(this.formData.monthlyInvestment);
+                    const r = parseFloat(this.formData.expectedReturn) / 100 / 12;
+                    const n = parseFloat(this.formData.time) * 12;
+
+                    const A = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+                    const totalInvestment = P * n;
+                    const gain = A - totalInvestment;
+
+                    this.$emit('calculate', {
+                        result: `Final Amount: ₹${A.toFixed(2)}\nTotal Investment: ₹${totalInvestment.toFixed(2)}\nTotal Gain: ₹${gain.toFixed(2)}`,
+                        chartData: {
+                            labels: ['Total Investment', 'Gain'],
+                            datasets: [{
+                                data: [totalInvestment, gain],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const HomeLoanCalculator = {
+            mixins: [CalculatorMixin],
+            data() {
+                return {
+                    fields: [
+                        { name: 'loanAmount', label: 'Loan Amount', type: 'number', step: '1000', placeholder: 'Enter loan amount' },
+                        { name: 'interestRate', label: 'Annual Interest Rate (%)', type: 'number', step: '0.1', placeholder: 'Enter annual interest rate' },
+                        { name: 'loanTerm', label: 'Loan Term (years)', type: 'number', step: '1', placeholder: 'Enter loan term in years' },
+                    ]
+                }
+            },
+            methods: {
+                calculate() {
+                    const P = parseFloat(this.formData.loanAmount);
+                    const r = parseFloat(this.formData.interestRate) / 100 / 12;
+                    const n = parseFloat(this.formData.loanTerm) * 12;
+
+                    const EMI = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+                    const totalPayment = EMI * n;
+                    const totalInterest = totalPayment - P;
+
+                    this.$emit('calculate', {
+                        result: `Monthly EMI: ₹${EMI.toFixed(2)}\nTotal Payment: ₹${totalPayment.toFixed(2)}\nTotal Interest: ₹${totalInterest.toFixed(2)}`,
+                        chartData: {
+                            labels: ['Principal', 'Interest'],
+                            datasets: [{
+                                data: [P, totalInterest],
+                                backgroundColor: ['#3B82F6', '#10B981']
+                            }]
+                        }
+                    });
+                }
+            }
+        }
+
+        const PersonalLoanCalculator = {
+              // ... (previous code remains the same)
+              methods: {
+                  calculate() {
+                      const P = parseFloat(this.formData.loanAmount);
+                      const r = parseFloat(this.formData.interestRate) / 100 / 12;
+                      const n = parseFloat(this.formData.loanTerm);
+
+                      const EMI = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+                      const totalPayment = EMI * n;
+                      const totalInterest = totalPayment - P;
+
+                      this.$emit('calculate', {
+                          result: `Monthly EMI: ₹${EMI.toFixed(2)}\nTotal Payment: ₹${totalPayment.toFixed(2)}\nTotal Interest: ₹${totalInterest.toFixed(2)}`,
+                          chartData: {
+                              labels: ['Principal', 'Interest'],
+                              datasets: [{
+                                  data: [P, totalInterest],
+                                  backgroundColor: ['#3B82F6', '#10B981']
+                              }]
+                          }
+                      });
+                  }
+              }
+          }
+
+          const VehicleLoanCalculator = {
+              mixins: [CalculatorMixin],
+              data() {
+                  return {
+                      fields: [
+                          { name: 'vehiclePrice', label: 'Vehicle Price', type: 'number', step: '100', placeholder: 'Enter vehicle price' },
+                          { name: 'downPayment', label: 'Down Payment', type: 'number', step: '100', placeholder: 'Enter down payment' },
+                          { name: 'interestRate', label: 'Annual Interest Rate (%)', type: 'number', step: '0.1', placeholder: 'Enter annual interest rate' },
+                          { name: 'loanTerm', label: 'Loan Term (months)', type: 'number', step: '1', placeholder: 'Enter loan term in months' },
+                      ]
+                  }
+              },
+              methods: {
+                  calculate() {
+                      const vehiclePrice = parseFloat(this.formData.vehiclePrice);
+                      const downPayment = parseFloat(this.formData.downPayment);
+                      const P = vehiclePrice - downPayment;
+                      const r = parseFloat(this.formData.interestRate) / 100 / 12;
+                      const n = parseFloat(this.formData.loanTerm);
+
+                      const EMI = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+                      const totalPayment = EMI * n;
+                      const totalInterest = totalPayment - P;
+
+                      this.$emit('calculate', {
+                          result: `Loan Amount: ₹${P.toFixed(2)}\nMonthly EMI: ₹${EMI.toFixed(2)}\nTotal Payment: ₹${totalPayment.toFixed(2)}\nTotal Interest: ₹${totalInterest.toFixed(2)}`,
+                          chartData: {
+                              labels: ['Down Payment', 'Principal', 'Interest'],
+                              datasets: [{
+                                  data: [downPayment, P, totalInterest],
+                                  backgroundColor: ['#3B82F6', '#10B981', '#F59E0B']
+                              }]
+                          }
+                      });
+                  }
+              }
+          }
+
+          // Main App
+          createApp({
+              components: {
+                  CompoundInterestCalculator,
+                  RDCalculator,
+                  FDCalculator,
+                  PostOfficeCalculator,
+                  PFPPFCalculator,
+                  SavingsAccountCalculator,
+                  MutualFundCalculator,
+                  SIPCalculator,
+                  HomeLoanCalculator,
+                  PersonalLoanCalculator,
+                  VehicleLoanCalculator
+              },
+              setup() {
+                  const currentPage = ref('home')
+                  const currentCalculator = ref(null)
+                  const showResult = ref(false)
+                  const calculationResult = ref('')
+                  const resultChart = ref(null)
+                  const isDarkMode = ref(true)
+
+                  const calculators = ref([
+                      {
+                          name: 'Compound Interest Calculator',
+                          category: 'Investments',
+                          bgImage: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'CompoundInterestCalculator'
+                      },
+                      {
+                          name: 'Recurring Deposit Calculator',
+                          category: 'Savings',
+                          bgImage: 'https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'RDCalculator'
+                      },
+                      {
+                          name: 'Fixed Deposit Calculator',
+                          category: 'Savings',
+                          bgImage: 'https://images.unsplash.com/photo-1565514020179-026b92b2d7c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'FDCalculator'
+                      },
+                      {
+                          name: 'Post Office Schemes Calculator',
+                          category: 'Government Schemes',
+                          bgImage: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'PostOfficeCalculator'
+                      },
+                      {
+                          name: 'PF/PPF Calculator',
+                          category: 'Retirement',
+                          bgImage: 'https://images.unsplash.com/photo-1573496799515-eebbb63814f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'PFPPFCalculator'
+                      },
+                      {
+                          name: 'Savings Account Calculator',
+                          category: 'Banking',
+                          bgImage: 'https://images.unsplash.com/photo-1616514197671-15d99ce7a6f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'SavingsAccountCalculator'
+                      },
+                      {
+                          name: 'Mutual Fund Calculator',
+                          category: 'Investments',
+                          bgImage: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'MutualFundCalculator'
+                      },
+                      {
+                          name: 'SIP Calculator',
+                          category: 'Investments',
+                          bgImage: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'SIPCalculator'
+                      },
+                      {
+                          name: 'Home Loan Calculator',
+                          category: 'Loans',
+                          bgImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'HomeLoanCalculator'
+                      },
+                      {
+                          name: 'Personal Loan Calculator',
+                          category: 'Loans',
+                          bgImage: 'https://images.unsplash.com/photo-1634733988138-bf2c3a2a13fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'PersonalLoanCalculator'
+                      },
+                      {
+                          name: 'Vehicle Loan Calculator',
+                          category: 'Loans',
+                          bgImage: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+                          component: 'VehicleLoanCalculator'
+                      }
+                  ])
+
+                  const openCalculator = (calc) => {
+                      currentCalculator.value = calc
+                      currentPage.value = 'calculator'
+                  }
+
+                  const handleCalculation = (data) => {
+                      calculationResult.value = data.result
+                      showResult.value = true
+                      nextTick(() => {
+                          if (resultChart.value) {
+                              resultChart.value.destroy()
+                          }
+                          const ctx = document.querySelector('canvas').getContext('2d')
+                          resultChart.value = new Chart(ctx, {
+                              type: 'doughnut',
+                              data: data.chartData,
+                              options: {
+                                  responsive: true,
+                                  plugins: {
+                                      legend: {
+                                          position: 'bottom',
+                                      }
+                                  }
+                              }
+                          })
+                      })
+                  }
+
+                  const toggleTheme = () => {
+                      isDarkMode.value = !isDarkMode.value
+                      document.documentElement.classList.toggle('dark')
+                  }
+
+                  onMounted(() => {
+                      document.documentElement.classList.toggle('dark', isDarkMode.value)
+                  })
+
+                  return {
+                      currentPage,
+                      calculators,
+                      currentCalculator,
+                      showResult,
+                      calculationResult,
+                      openCalculator,
+                      handleCalculation,
+                      toggleTheme
+                  }
+              }
+          }).mount('#app')
+      </script>
+  </body>
+  </html>
